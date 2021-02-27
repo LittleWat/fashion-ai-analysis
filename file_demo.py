@@ -92,7 +92,7 @@ def main(args):
     encoder.load_state_dict(torch.load(args.encoder_path, map_location=device))
 
     for inx, image_filename in enumerate(imlist):
-
+        print ('---------------------------')
         print(image_filename)
         preload_img = cv2.imread(image_filename)
         pixel = preload_img.shape[1] * preload_img.shape[0]
@@ -193,11 +193,13 @@ def main(args):
                         sentence = '/'.join(sampled_caption)
                  
                         # again sampling for testing
-                        print ('---------------------------')
+                        
                         print (str(i+1) + ': ' + sentence)
                         write(detections[i], orig_img, sampled_caption,sentence, i+1, coco_classes, colors)
                         #list(map(lambda x: write(x, orig_img, captions), detections[i].unsqueeze(0)))
-        cv2.imwrite(f'/content/drive/MyDrive/models/fashion-ai-analysis/out-{image_filename}', orig_img)
+        outfilename = f'/content/drive/MyDrive/models/fashion-ai-analysis/out-{image_filename}.jpg'
+        print(f"output: {outfilename}")
+        cv2.imwrite(outfilename, orig_img)
 
 #    image = Image.open(args.image)   
 #    plt.imshow(np.asarray(image))   
