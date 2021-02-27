@@ -1,23 +1,24 @@
-import torch
-import numpy as np 
 import argparse
-import pickle 
-import os
-from os import listdir, getcwd
-import os.path as osp
 import glob
-from torchvision import transforms 
-from model import EncoderClothing, DecoderClothing
-from darknet import Darknet
-from PIL import Image
-from util import *
-import cv2
+import os
+import os.path as osp
+import pickle
 import pickle as pkl
 import random
-from preprocess import prep_image
-
-
 import sys
+from os import getcwd, listdir
+
+import cv2
+import numpy as np
+import torch
+from PIL import Image
+from torchvision import transforms
+
+from darknet import Darknet
+from model import DecoderClothing, EncoderClothing
+from preprocess import prep_image
+from util import *
+
 if sys.version_info >= (3,0):
     from roi_align.roi_align import RoIAlign
 else :
@@ -91,10 +92,10 @@ def main(args):
 
     encoder.load_state_dict(torch.load(args.encoder_path, map_location=device))
 
-    for inx, image in enumerate(imlist):
+    for inx, image_filename in enumerate(imlist):
 
-        print(image)
-        preload_img = cv2.imread(image)
+        print(image_filename)
+        preload_img = cv2.imread(image_filename)
         pixel = preload_img.shape[1] * preload_img.shape[0]
 
         if pixel < 352 * 240:
@@ -110,7 +111,7 @@ def main(args):
 
         inp_dim = int(yolov3.net_info["height"])
 
-        image, orig_img, im_dim = prep_image(image, inp_dim)
+        image, orig_img, im_dim = prep_image(image_filename, inp_dim)
 
         im_dim = torch.FloatTensor(im_dim).repeat(1, 2)
 
@@ -197,12 +198,7 @@ def main(args):
                         print (str(i+1) + ': ' + sentence)
                         write(detections[i], orig_img, sampled_caption,sentence, i+1, coco_classes, colors)
                         #list(map(lambda x: write(x, orig_img, captions), detections[i].unsqueeze(0)))
-        
-        cv2.imshow("frame", orig_img)
-        key = cv2.waitKey(0)
-
-        if key & 0xFF == ord('q'): 
-            break
+        cv2.imwrite(f'data/out-{image_filename}', orig_img)
 
 #    image = Image.open(args.image)   
 #    plt.imshow(np.asarray(image))   
