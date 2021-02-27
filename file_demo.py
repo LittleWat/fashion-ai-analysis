@@ -190,14 +190,14 @@ def main(args):
                         sampled_caption[11] = sampled_caption[10]
                         sampled_caption[10] = c11
 
-                        sentence = ' '.join(sampled_caption)
+                        sentence = '/'.join(sampled_caption)
                  
                         # again sampling for testing
-                        #print ('---------------------------')
+                        print ('---------------------------')
                         print (str(i+1) + ': ' + sentence)
                         write(detections[i], orig_img, sampled_caption,sentence, i+1, coco_classes, colors)
                         #list(map(lambda x: write(x, orig_img, captions), detections[i].unsqueeze(0)))
-        cv2.imwrite(f'out-{image_filename}', orig_img)
+        cv2.imwrite(f'/content/drive/MyDrive/models/fashion-ai-analysis/out-{image_filename}', orig_img)
 
 #    image = Image.open(args.image)   
 #    plt.imshow(np.asarray(image))   
