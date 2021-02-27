@@ -1,24 +1,23 @@
+import torch
+import numpy as np 
 import argparse
-import glob
+import pickle 
 import os
+from os import listdir, getcwd
 import os.path as osp
-import pickle
+import glob
+from torchvision import transforms 
+from model import EncoderClothing, DecoderClothing
+from darknet import Darknet
+from PIL import Image
+from util import *
+import cv2
 import pickle as pkl
 import random
-import sys
-from os import getcwd, listdir
-
-import cv2
-import numpy as np
-import torch
-from PIL import Image
-from torchvision import transforms
-
-from darknet import Darknet
-from model import DecoderClothing, EncoderClothing
 from preprocess import prep_image
-from util import *
 
+
+import sys
 if sys.version_info >= (3,0):
     from roi_align.roi_align import RoIAlign
 else :
