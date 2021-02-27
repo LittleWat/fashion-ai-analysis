@@ -110,7 +110,7 @@ def main(args):
 
         inp_dim = int(yolov3.net_info["height"])
 
-        image, orig_img, im_dim = prep_image(image, inp_dim)
+        image, orig_img, im_dim = prep_image(preload_img, inp_dim)
 
         im_dim = torch.FloatTensor(im_dim).repeat(1, 2)
 
