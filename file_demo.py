@@ -73,7 +73,7 @@ def main(args):
     try:
         list_dir = os.listdir(images)
      #   list_dir.sort(key=lambda x: int(x[:-4]))
-        imlist = [osp.join(osp.realpath('.'), images, img) for img in list_dir if os.path.splitext(img)[1] =='.jpg'  or os.path.splitext(img)[1] =='.JPG' or os.path.splitext(img)[1] =='.png']
+        imlist = [osp.join(osp.realpath('.'), images, img) for img in list_dir if os.path.splitext(img)[1].lower() =='.jpg'  or os.path.splitext(img)[1].lower() =='.jpeg' or os.path.splitext(img)[1] =='.png']
         print(imlist)
     except NotADirectoryError:
         imlist = []
